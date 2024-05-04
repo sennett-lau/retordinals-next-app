@@ -100,7 +100,8 @@ const XBannerCanvas = (props: Props) => {
     }
     const ctx = canvas.getContext('2d')
 
-    const retMaxX = canvas.width - canvas.width / 3
+    // 416 is the width of the retordinal image with height of 500
+    const retMaxX = canvas.width - 416
 
     const retImage = new Image()
 
@@ -115,7 +116,7 @@ const XBannerCanvas = (props: Props) => {
 
     retImage.onload = () => {
       if (isFacingLeft) {
-        ctx.drawImage(retImage, Math.min(retXPositionOnCanvas, retMaxX), 0, canvas.height, canvas.height)
+        ctx.drawImage(retImage, Math.min(retXPositionOnCanvas, retMaxX), 0, 416.17, canvas.height)
       } else {
         ctx.save()
         ctx.translate(Math.min(retXPositionOnCanvas, retMaxX) + canvas.height, 0)
@@ -186,7 +187,7 @@ const XBannerCanvas = (props: Props) => {
               key={index}
               src={`/assets/retordinals/${ret}.webp`}
               alt={ret}
-              width={containerWidth / 3}
+              width={((containerWidth / 3) * 400) / 480}
               height={containerWidth / 3}
               className={`absolute bottom-0 left-0 z-20`}
               id={`ret-layer-${index}`}
@@ -204,7 +205,7 @@ const XBannerCanvas = (props: Props) => {
           <SliderControl
             key={index}
             label={`Ret ${index + 1} Position`}
-            max={containerWidth - containerWidth / 3}
+            max={containerWidth - ((containerWidth / 3) * 400) / 480}
             value={retXPosition}
             onChange={(e) => handleRetXPositionChange(parseInt(e.target.value), index)}
             toggleLabel='Facing'
