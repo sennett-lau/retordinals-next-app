@@ -6,7 +6,7 @@ type Props = {
   toggleLabel?: string
   toggleTextPair?: [string, string]
   toggleValue?: boolean
-  onToggle?: (isFaceLeft: boolean) => void
+  onToggle?: (isFacingRight: boolean) => void
 }
 
 const SliderControl = (props: Props) => {
@@ -23,10 +23,10 @@ const SliderControl = (props: Props) => {
               className='flex items-center rounded-md overflow-hidden cursor-pointer'
               onClick={() => onToggle(!toggleValue)}
             >
-              <p className={`px-4 ${toggleValue ? 'text-primary-500 bg-black' : 'text-black bg-white'}`}>
+              <p className={`px-4 ${!toggleValue ? 'text-primary-500 bg-black' : 'text-black bg-white'}`}>
                 {toggleTextPair[0]}
               </p>
-              <p className={`px-4 ${!toggleValue ? 'text-primary-500 bg-black' : 'text-black bg-white'}`}>
+              <p className={`px-4 ${toggleValue ? 'text-primary-500 bg-black' : 'text-black bg-white'}`}>
                 {toggleTextPair[1]}
               </p>
             </div>

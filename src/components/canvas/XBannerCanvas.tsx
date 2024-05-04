@@ -21,7 +21,7 @@ const XBannerCanvas = (props: Props) => {
   const [blackLayerOpacity, setBlackLayerOpacity] = useState<number>(25)
 
   const [retIdToPosition, setRetIdToPosition] = useState<{ [key: string]: number }>({})
-  const [retIdToIsFacingLeft, setretIdToIsFacingLeft] = useState<{ [key: string]: boolean }>({})
+  const [retIdToIsFacingRight, setretIdToIsFacingRight] = useState<{ [key: string]: boolean }>({})
 
   useEffect(() => {
     const handleResize = () => {
@@ -45,7 +45,7 @@ const XBannerCanvas = (props: Props) => {
 
       for (const ret of rets) {
         newRetFacings[ret] =
-          retIdToIsFacingLeft[ret] === undefined || retIdToIsFacingLeft[ret] === null || retIdToIsFacingLeft[ret]
+          retIdToIsFacingRight[ret] === undefined || retIdToIsFacingRight[ret] === null || retIdToIsFacingRight[ret]
       }
 
       newretXPositions.forEach((pos, index) => {
@@ -57,12 +57,12 @@ const XBannerCanvas = (props: Props) => {
       })
 
       setRetXPositions(newretXPositions)
-      setretIdToIsFacingLeft(newRetFacings)
+      setretIdToIsFacingRight(newRetFacings)
     }
     if (containerWidth > 0) {
       drawImages()
     }
-  }, [banner, rets, containerWidth, retXPositions, retIdToIsFacingLeft, blackLayerOpacity])
+  }, [banner, rets, containerWidth, retXPositions, retIdToIsFacingRight, blackLayerOpacity])
 
   const drawImages = () => {
     const canvas = canvasRef.current
@@ -101,27 +101,27 @@ const XBannerCanvas = (props: Props) => {
     const ctx = canvas.getContext('2d')
 
     // 416 is the width of the retordinal image with height of 500
-    const retMaxX = canvas.width - 416
+    const retMaxX = canvas.width - 416.17
 
     const retImage = new Image()
 
     retImage.src = `/assets/retordinals/${rets[index]}.webp`
 
-    const isFacingLeft =
-      retIdToIsFacingLeft[rets[index]] === undefined ||
-      retIdToIsFacingLeft[rets[index]] === null ||
-      retIdToIsFacingLeft[rets[index]]
+    const isFacingRight =
+      retIdToIsFacingRight[rets[index]] === undefined ||
+      retIdToIsFacingRight[rets[index]] === null ||
+      retIdToIsFacingRight[rets[index]]
 
     const retXPositionOnCanvas = (retXPositions[index] / containerWidth) * canvas.width
 
     retImage.onload = () => {
-      if (isFacingLeft) {
+      if (isFacingRight) {
         ctx.drawImage(retImage, Math.min(retXPositionOnCanvas, retMaxX), 0, 416.17, canvas.height)
       } else {
         ctx.save()
-        ctx.translate(Math.min(retXPositionOnCanvas, retMaxX) + canvas.height, 0)
+        ctx.translate(Math.min(retXPositionOnCanvas, retMaxX) + 416.17, 0)
         ctx.scale(-1, 1)
-        ctx.drawImage(retImage, 0, 0, canvas.height, canvas.height)
+        ctx.drawImage(retImage, 0, 0, 416.17, canvas.height)
         ctx.restore()
       }
 
@@ -152,20 +152,20 @@ const XBannerCanvas = (props: Props) => {
     setRetIdToPosition(newMap)
 
     if (retLayer) {
-      retLayer.style.transform = `translateX(${newretXPositions[index]}px) scaleX(${retIdToIsFacingLeft[rets[index]] ? 1 : -1})`
+      retLayer.style.transform = `translateX(${newretXPositions[index]}px) scaleX(${retIdToIsFacingRight[rets[index]] ? 1 : -1})`
     }
   }
 
-  const onToggleFacing = (isFacingLeft: boolean, index: number) => {
-    const newRetFacings = { ...retIdToIsFacingLeft }
-    newRetFacings[rets[index]] = isFacingLeft
+  const onToggleFacing = (isFacingRight: boolean, index: number) => {
+    const newRetFacings = { ...retIdToIsFacingRight }
+    newRetFacings[rets[index]] = isFacingRight
 
-    setretIdToIsFacingLeft(newRetFacings)
+    setretIdToIsFacingRight(newRetFacings)
 
     const retLayer = document.getElementById(`ret-layer-${index}`)
 
     if (retLayer) {
-      retLayer.style.transform = `translateX(${retXPositions[index]}px) scaleX(${isFacingLeft ? 1 : -1})`
+      retLayer.style.transform = `translateX(${retXPositions[index]}px) scaleX(${isFacingRight ? 1 : -1})`
     }
   }
 
@@ -210,8 +210,8 @@ const XBannerCanvas = (props: Props) => {
             onChange={(e) => handleRetXPositionChange(parseInt(e.target.value), index)}
             toggleLabel='Facing'
             toggleTextPair={['L', 'R']}
-            toggleValue={retIdToIsFacingLeft[rets[index]]}
-            onToggle={(isFacingLeft) => onToggleFacing(isFacingLeft, index)}
+            toggleValue={retIdToIsFacingRight[rets[index]]}
+            onToggle={(isFacingRight) => onToggleFacing(isFacingRight, index)}
           />
         ))}
     </div>
