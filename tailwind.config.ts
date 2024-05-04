@@ -9,8 +9,8 @@ const config: Config = {
   theme: {
     extend: {
       backgroundImage: {
-        'header-bg': "url('/web/header-bg.png')",
-        'dotted': "url('/web/dotted.png')",
+        'v1_orange': "url('/web/V1_orange.png')",
+        'v1_dark': "url('/web/V1_dark.png')",
       },
       colors: {
         primary: {
