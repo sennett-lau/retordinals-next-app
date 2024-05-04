@@ -9,8 +9,8 @@ const config: Config = {
   theme: {
     extend: {
       backgroundImage: {
-        'v1_orange': "url('/web/V1_orange.png')",
-        'v1_dark': "url('/web/V1_dark.png')",
+        'v1_orange': "url('/web/V1_Orange.png')",
+        'v1_dark': "url('/web/V1_Dark.png')",
       },
       colors: {
         primary: {
