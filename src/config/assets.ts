@@ -11,4 +11,8 @@ export const bannerConfig = [
     name: 'retordinals_003',
     by: 'Retordinals',
   },
+  {
+    name: 'lambo',
+    by: 'Retordinals',
+  },
 ]
